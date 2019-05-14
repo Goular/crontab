@@ -39,6 +39,11 @@ func main() {
 		goto ERR
 	}
 
+	// 启动etcd任务管理器
+	if err = master.InitJobMgr(); err != nil {
+		goto ERR
+	}
+
 	// 启动HTTP API服务
 	if err = master.InitApiServer(); err != nil {
 		goto ERR

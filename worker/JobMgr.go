@@ -86,6 +86,7 @@ func (JobMgr *JobMgr) watchJobs() (err error) {
 		if job, err = common.UnpackJob(kvpair.Value); err == nil {
 			jobEvent = common.BuildJobEvent(common.JOB_EVENT_SAVE, job)
 			// TODO:把这个job同步给scheduler(调度协程)
+			fmt.Println(*jobEvent)
 		}
 	}
 
@@ -94,11 +95,11 @@ func (JobMgr *JobMgr) watchJobs() (err error) {
 		// 从GET时刻的后续版本开始监听变化
 		watchStartRevision = getResp.Header.Revision + 1
 		// 监听 /cron/jobs目录的后续变化
-		watchChan = JobMgr.watcher.Watch(context.TODO(), common.JOB_SAVE_DIR, clientv3.WithRev(watchStartRevision))
+		watchChan = JobMgr.watcher.Watch(context.TODO(), common.JOB_SAVE_DIR, clientv3.WithRev(watchStartRevision), clientv3.WithPrefix())
 		// 处理监听事件
 		for watchResp = range watchChan {
 			// 每一次遍历过来的，可能不止一种事件
-			for watchEvent = range watchResp.Events {
+			for _, watchEvent = range watchResp.Events {
 				switch watchEvent.Type {
 				case mvccpb.PUT: //任务保存事件
 					if job, err = common.UnpackJob(watchEvent.Kv.Value); err != nil {

@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/Goular/crontab/master"
 	"github.com/Goular/crontab/worker"
 	"runtime"
 )
@@ -36,7 +35,7 @@ func main() {
 	initEnv()
 
 	// 加载配置
-	if err = master.InitConfig(confFile); err != nil {
+	if err = worker.InitConfig(confFile); err != nil {
 		goto ERR
 	}
 

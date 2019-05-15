@@ -118,6 +118,7 @@ func (JobMgr *JobMgr) watchJobs() (err error) {
 				}
 				// TODO:推送给scheduler
 				//G_Sccheduler.PushJobEvent(jobEvent)
+				fmt.Println(*jobEvent)
 			}
 		}
 	}()

@@ -2,7 +2,7 @@ package master
 
 import (
 	"encoding/json"
-	"github.com/Goular/crontab/master/common"
+	"github.com/Goular/crontab/common"
 	"net"
 	"net/http"
 	"strconv"

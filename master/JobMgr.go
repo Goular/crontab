@@ -145,3 +145,31 @@ func (jobMgr *JobMgr) ListJobs() (jobList []*common.Job, err error) {
 	}
 	return
 }
+
+// 杀死任务
+func (JobMgr *JobMgr) KillJob(name string) (err error) {
+	// 更新一下 key=/cron/killer/任务名
+	var (
+		killerKey      string
+		leaseGrantResp *clientv3.LeaseGrantResponse
+		leaseId        clientv3.LeaseID
+	)
+
+	// 通知worker杀死对应的任务
+	killerKey = common.JOB_KILLER_DIR + name
+
+	// 让worker监听一次put操作，创建一个租约让其稍后自动获取即可
+	if leaseGrantResp, err = JobMgr.lease.Grant(context.TODO(), 1); err != nil {
+		return
+	}
+
+	//租约ID
+	leaseId = leaseGrantResp.ID
+
+	// 设置killer标记
+	if _, err = JobMgr.kv.Put(context.TODO(), killerKey, "", clientv3.WithLease(leaseId)); err != nil {
+		return
+	}
+
+	return
+}

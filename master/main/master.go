@@ -50,6 +50,8 @@ func main() {
 	}
 
 	// 正常退出
+	select {}
+
 	return
 ERR:
 	fmt.Println(err)

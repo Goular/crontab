@@ -74,6 +74,9 @@ func (jobMgr *JobMgr) SaveJob(job *common.Job) (oldJob *common.Job, err error) {
 	if putResp, err = jobMgr.kv.Put(context.TODO(), jobKey, string(jobValue), clientv3.WithPrevKV()); err != nil {
 		return
 	}
+
+	// fmt.Println("::", putResp.PrevKv)
+
 	// 如果是更新，那么返回旧值
 	if putResp.PrevKv != nil {
 		// 对旧有的至做一个反序列化

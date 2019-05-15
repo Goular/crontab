@@ -86,7 +86,8 @@ func (JobMgr *JobMgr) watchJobs() (err error) {
 		if job, err = common.UnpackJob(kvpair.Value); err == nil {
 			jobEvent = common.BuildJobEvent(common.JOB_EVENT_SAVE, job)
 			// TODO:把这个job同步给scheduler(调度协程)
-			fmt.Println(*jobEvent)
+			//fmt.Println(*jobEvent)
+			G_scheduler.PushJobEvent(jobEvent)
 		}
 	}
 
@@ -116,9 +117,9 @@ func (JobMgr *JobMgr) watchJobs() (err error) {
 					// 构建一个删除的Event
 					jobEvent = common.BuildJobEvent(common.JOB_EVENT_DELETE, job)
 				}
-				// TODO:推送给scheduler
-				//G_Sccheduler.PushJobEvent(jobEvent)
-				fmt.Println(*jobEvent)
+				// 变化推送给scheduler
+				G_scheduler.PushJobEvent(jobEvent)
+				//fmt.Println(*jobEvent)
 			}
 		}
 	}()

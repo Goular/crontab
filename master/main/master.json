@@ -10,5 +10,7 @@
     "106.12.118.76:2379"
   ],
   "etcd的连接超时": "单位毫秒",
-  "etcdDialTimeout": 5000
+  "etcdDialTimeout": 5000,
+  "web页面根目录": "静态页面，前后端分离开发(生产环境下需要些绝对路径)",
+  "webroot": "./webroot"
 }

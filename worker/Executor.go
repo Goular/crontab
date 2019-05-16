@@ -1,7 +1,6 @@
 package worker
 
 import (
-	"context"
 	"github.com/Goular/crontab/common"
 	"os/exec"
 	"time"
@@ -49,7 +48,7 @@ func (executor *Executor) ExecuteJob(info *common.JobExecuteInfo) {
 			// cmd = exec.CommandContext(context.TODO(), "/bin/bash", "-c", info.Job.Command)
 
 			// 执行shell命令(Windows使用)
-			cmd = exec.CommandContext(context.TODO(), "E:\\cygwin64\\bin\\bash.exe", "-c", info.Job.Command)
+			cmd = exec.CommandContext(info.CancelCtx, "E:\\cygwin64\\bin\\bash.exe", "-c", info.Job.Command)
 
 			// 执行并捕获输出
 			output, err = cmd.CombinedOutput()

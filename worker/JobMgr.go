@@ -62,6 +62,12 @@ func InitJobMgr() (err error) {
 	return
 }
 
+// 创建任务执行锁
+func (jobMgr *JobMgr) CreateJobLock(jobName string) (jobLock *JobLock) {
+	jobLock = InitJobLock(jobName, jobMgr.kv, jobMgr.lease)
+	return
+}
+
 // 监听任务的变化
 func (JobMgr *JobMgr) watchJobs() (err error) {
 	var (

@@ -2,6 +2,7 @@ package worker
 
 import (
 	"github.com/Goular/crontab/common"
+	"math/rand"
 	"os/exec"
 	"time"
 )
@@ -34,6 +35,10 @@ func (executor *Executor) ExecuteJob(info *common.JobExecuteInfo) {
 		jobLock = G_jobMgr.CreateJobLock(info.Job.Name)
 
 		//上锁
+
+		// 随机睡眠(0-1s)
+		time.Sleep(time.Duration(rand.Intn(1000)) * time.Millisecond)
+
 		err = jobLock.TryLock()
 		defer jobLock.Unlock()
 

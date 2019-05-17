@@ -168,7 +168,7 @@ func (scheduler *Scheduler) handleJobResult(result *common.JobExecuteResult) {
 	delete(scheduler.jobExecutingTable, result.ExecuteInfo.Job.Name)
 
 	// 生成执行日志
-	if result.Err == common.ERR_LOCK_ALREADY_REQUIRED {
+	if result.Err != common.ERR_LOCK_ALREADY_REQUIRED {
 		jobLog = &common.JobLog{
 			JobName:      result.ExecuteInfo.Job.Name,
 			Command:      result.ExecuteInfo.Job.Command,
@@ -183,9 +183,10 @@ func (scheduler *Scheduler) handleJobResult(result *common.JobExecuteResult) {
 		} else {
 			jobLog.Err = ""
 		}
+		fmt.Println("aaaaaa")
 		// TODO:将日志存储到MongoDB
 		G_logSink.Append(jobLog)
 	}
-
+	fmt.Println("bbbbbb")
 	fmt.Println("任务执行完成:", result.ExecuteInfo.Job.Name, string(result.Output), result.Err)
 }

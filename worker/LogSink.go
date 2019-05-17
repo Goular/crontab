@@ -87,7 +87,7 @@ func InitLogSink() (err error) {
 	// 2.选择db和collection
 	G_logSink = &LogSink{
 		client:         client,
-		logCollection:  client.Database("cron").Collection("log"),
+		logCollection:  client.Database("test_db").Collection("log"),
 		logChan:        make(chan *common.JobLog, 1000),
 		autoCommitChan: make(chan *common.LogBatch, 1000),
 	}

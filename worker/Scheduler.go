@@ -183,10 +183,10 @@ func (scheduler *Scheduler) handleJobResult(result *common.JobExecuteResult) {
 		} else {
 			jobLog.Err = ""
 		}
-		fmt.Println("aaaaaa")
+		//fmt.Println("aaaaaa")
 		// TODO:将日志存储到MongoDB
 		G_logSink.Append(jobLog)
 	}
-	fmt.Println("bbbbbb")
-	fmt.Println("任务执行完成:", result.ExecuteInfo.Job.Name, string(result.Output), result.Err)
+	//fmt.Println("bbbbbb")
+	//fmt.Println("任务执行完成:", result.ExecuteInfo.Job.Name, string(result.Output), result.Err)
 }

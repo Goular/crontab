@@ -12,5 +12,9 @@
   "etcd的连接超时": "单位毫秒",
   "etcdDialTimeout": 5000,
   "web页面根目录": "静态页面，前后端分离开发(生产环境下需要些绝对路径)",
-  "webroot": "./webroot"
+  "webroot": "./webroot",
+  "MongoDB地址": "采用MongoDB URI",
+  "MongoDBUri": "mongodb://localhost:27017",
+  "mongodb连接超时时间": "单位毫秒",
+  "mongoDBConnectTimeout": 5000
 }

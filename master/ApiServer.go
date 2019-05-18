@@ -188,6 +188,29 @@ ERR:
 	}
 }
 
+// 获取健康workerlist列表(服务发现)
+func handleWorkerList(resp http.ResponseWriter, req *http.Request) {
+	var (
+		workerArr []string
+		err       error
+		bytes     []byte
+	)
+	if workerArr, err = G_workerMgr.ListWorkers(); err != nil {
+		goto ERR
+	}
+
+	// 5.返回正常的应答
+	if bytes, err = common.BuildResponse(0, "success", workerArr); err == nil {
+		resp.Write(bytes)
+	}
+	return
+ERR:
+	// 6.返回异常的应答
+	if bytes, err = common.BuildResponse(-1, err.Error(), nil); err == nil {
+		resp.Write(bytes)
+	}
+}
+
 // 初始化服务
 func InitApiServer() (err error) {
 	var (
@@ -207,6 +230,7 @@ func InitApiServer() (err error) {
 	mux.HandleFunc("/job/list", handleJobList)
 	mux.HandleFunc("/job/kill", handleJobKill)
 	mux.HandleFunc("/job/log", handleJobLog)
+	mux.HandleFunc("/worker/list", handleWorkerList)
 
 	// 静态资源目录
 	staticDir = http.Dir(G_config.WebRoot)

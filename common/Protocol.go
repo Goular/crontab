@@ -157,3 +157,9 @@ func BuildJobExecuteInfo(jobSchedulePlan *JobSchedulePlan) (jobExecuteInfo *JobE
 	jobExecuteInfo.CancelCtx, jobExecuteInfo.CancelFunc = context.WithCancel(context.TODO())
 	return
 }
+
+// 提取worker的IP
+// 效果: /cron/workers/{IP地址} 抹掉 /cron/workers/
+func ExtractWorkerIP(regKey string) string {
+	return strings.TrimPrefix(regKey, JOB_WORKER_DIR)
+}
